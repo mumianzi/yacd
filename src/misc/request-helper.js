@@ -11,7 +11,9 @@ export function genCommonHeaders({ secret }) {
 }
 
 export function getAPIBaseURL({ hostname, port }) {
-  return `http://${hostname}:${port}`;
+  let protocol = document.location.protocol;
+  protocol = protocol === 'https:' ? 'https:' : 'http:';
+  return `${protocol}//${hostname}:${port}`;
 }
 
 export function getURLAndInit({ hostname, port, secret }) {

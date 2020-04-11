@@ -65,7 +65,10 @@ function getWsUrl(apiConfig) {
   if (typeof secret === 'string' && secret !== '') {
     qs += '&token=' + secret;
   }
-  return `ws://${hostname}:${port}${endpoint}${qs}`;
+
+  let protocol = document.location.protocol;
+  protocol = protocol === 'https:' ? 'wss:' : 'ws:';
+  return `${protocol}//${hostname}:${port}${endpoint}${qs}`;
 }
 
 // 1 OPEN

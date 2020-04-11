@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.11](https://github.com/mumianzi/yacd/compare/v0.1.11...v0.2.11) (2020-04-11)
+
+Features:
+
+- 增加重新加载配置入口；
+- 支持 https 反代
+
 ## [0.1.11](https://github.com/haishanh/yacd/compare/v0.1.10...v0.1.11) (2020-03-21)
 
 Features:

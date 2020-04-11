@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect, useStoreActions } from './StateProvider';
-import { getConfigs, fetchConfigs, updateConfigs } from '../store/configs';
+import {
+  getConfigs,
+  fetchConfigs,
+  updateConfigs,
+  reloadConfigs
+} from '../store/configs';
 import {
   getClashAPIConfig,
   getSelectedChartStyleIndex,
@@ -76,6 +81,8 @@ const mapState2 = s => ({
 const Config = connect(mapState2)(ConfigImpl);
 export default connect(mapState)(ConfigContainer);
 
+let ConfigPath = '/root/.config/clash/config.yaml';
+
 function ConfigContainer({ dispatch, configs, apiConfig }) {
   useEffect(() => {
     dispatch(fetchConfigs(apiConfig));
@@ -119,6 +126,13 @@ function ConfigImpl({
     [apiConfig, dispatch, setConfigState]
   );
 
+  const handleReloadBtn = () => {
+    // const name = 'allow-lan';
+    // const value = checked;
+    // setConfigState(name, value);
+    dispatch(reloadConfigs(apiConfig, ConfigPath));
+  };
+
   const handleInputOnChange = useCallback(
     e => {
       const target = e.target;
@@ -135,7 +149,9 @@ function ConfigImpl({
         case 'port':
           if (target.value !== '') {
             const num = parseInt(target.value, 10);
-            if (num < 0 || num > 65535) return;
+            if (num < 0 || num > 65535) {
+              return;
+            }
           }
           setConfigState(name, value);
           break;
@@ -157,12 +173,18 @@ function ConfigImpl({
         case 'socks-port':
         case 'redir-port': {
           const num = parseInt(value, 10);
-          if (num < 0 || num > 65535) return;
+          if (num < 0 || num > 65535) {
+            return;
+          }
           dispatch(updateConfigs(apiConfig, { [name]: num }));
           break;
         }
         case 'latencyTestUrl': {
           updateAppConfig(name, value);
+          break;
+        }
+        case 'reloadConfigBtn': {
+          ConfigPath = value;
           break;
         }
         default:
@@ -249,6 +271,18 @@ function ConfigImpl({
             selectedIndex={selectedChartStyleIndex}
             onChange={selectChartStyleIndex}
           />
+        </div>
+        <div style={{ maxWidth: 360 }}>
+          <div className={s0.label}>Reload Config</div>
+          <SelfControlledInput
+            name="reloadConfigBtn"
+            type="text"
+            value={ConfigPath}
+            onBlur={handleInputOnBlur}
+          />
+          <div className={s0.label}>
+            <Button label="Reload" onClick={handleReloadBtn} />
+          </div>
         </div>
         <div style={{ maxWidth: 360 }}>
           <div className={s0.label}>Latency Test URL</div>

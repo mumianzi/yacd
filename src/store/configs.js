@@ -81,6 +81,33 @@ export function updateConfigs(apiConfig, partialConfg) {
   };
 }
 
+export function reloadConfigs(apiConfig, path) {
+  return async dispatch => {
+    configsAPI
+      .reloadConfigs(apiConfig, path)
+      .then(
+        res => {
+          if (res.ok === false) {
+            // eslint-disable-next-line no-console
+            console.log('Error reload configs', res.statusText);
+          }
+        },
+        err => {
+          // eslint-disable-next-line no-console
+          console.log('Error reload configs', err);
+          throw err;
+        }
+      )
+      .then(() => {
+        dispatch(fetchConfigs(apiConfig));
+      });
+
+    dispatch('storeConfigsOptimisticReloadConfigs', s => {
+      s.configs.configs = { ...s.configs.configs, path };
+    });
+  };
+}
+
 export const initialState = {
   configs: {
     port: 7890,
