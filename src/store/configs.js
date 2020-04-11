@@ -1,6 +1,8 @@
 import * as configsAPI from '../api/configs';
 import * as trafficAPI from '../api/traffic';
 import { openModal } from './modals';
+import { fetchRules } from './rules.js';
+import { fetchProxies } from './proxies.js';
 
 export const getConfigs = s => s.configs.configs;
 export const getLogLevel = s => s.configs.configs['log-level'];
@@ -100,6 +102,8 @@ export function reloadConfigs(apiConfig, path) {
       )
       .then(() => {
         dispatch(fetchConfigs(apiConfig));
+        dispatch(fetchProxies(apiConfig));
+        dispatch(fetchRules(apiConfig));
       });
 
     dispatch('storeConfigsOptimisticReloadConfigs', s => {

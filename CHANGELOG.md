@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.12](https://github.com/mumianzi/yacd/compare/v0.2.11...v0.2.12) (2020-04-11)
+
+Fix:
+
+- 重新加载配置后重新获取规则和代理列表；
+
 ## [0.2.11](https://github.com/mumianzi/yacd/compare/v0.1.11...v0.2.11) (2020-04-11)
 
 Features:
