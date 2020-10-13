@@ -29,3 +29,14 @@ export async function updateConfigs(
   const body = JSON.stringify(configsPatchWorkaround(o));
   return await fetch(url + endpoint, { ...init, body, method: 'PATCH' });
 }
+
+export async function reloadConfigs(apiConfig: ClashAPIConfig, o = null) {
+    const { url, init } = getURLAndInit(apiConfig);
+    o = o ? o : '/root/.config/clash/config.yaml';
+    return await fetch(url + endpoint, {
+        ...init,
+        method: 'PUT',
+        // mode: 'cors',
+        body: JSON.stringify({ path: o }),
+    });
+}

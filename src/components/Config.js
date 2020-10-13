@@ -6,7 +6,12 @@ import {
   getLatencyTestUrl,
   getSelectedChartStyleIndex,
 } from '../store/app';
-import { fetchConfigs, getConfigs, updateConfigs } from '../store/configs';
+import {
+  fetchConfigs,
+  getConfigs,
+  reloadConfigs,
+  updateConfigs,
+} from '../store/configs';
 import { openModal } from '../store/modals';
 import Button from './Button';
 import s0 from './Config.module.css';
@@ -78,6 +83,8 @@ const mapState2 = (s) => ({
   apiConfig: getClashAPIConfig(s),
 });
 
+const ConfigPath = '/root/.config/clash/config.yaml';
+
 const Config = connect(mapState2)(ConfigImpl);
 export default connect(mapState)(ConfigContainer);
 
@@ -127,6 +134,10 @@ function ConfigImpl({
     },
     [apiConfig, dispatch, setConfigState]
   );
+
+  const handleReloadBtn = () => {
+    dispatch(reloadConfigs(apiConfig, ConfigPath));
+  };
 
   const handleInputOnChange = useCallback(
     (e) => {
@@ -257,6 +268,18 @@ function ConfigImpl({
             value={latencyTestUrl}
             onBlur={handleInputOnBlur}
           />
+        </div>
+        <div style={{ maxWidth: 360 }}>
+          <div className={s0.label}>Reload Config</div>
+          <SelfControlledInput
+            name="reloadConfigBtn"
+            type="text"
+            value={ConfigPath}
+            onBlur={handleInputOnBlur}
+          />
+          <div className={s0.label}>
+            <Button label="Reload" onClick={handleReloadBtn} />
+          </div>
         </div>
         <div>
           <div className={s0.label}>Action</div>
