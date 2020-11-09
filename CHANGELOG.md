@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.2.10](https://github.com/haishanh/yacd/compare/v0.2.9...v0.2.10) (2020-11-06)
+
+Added:
+
+- Precache assets with service worker.
+
+## [0.2.9](https://github.com/haishanh/yacd/compare/v0.2.8...v0.2.9) (2020-11-01)
+
+Added:
+
+- Display current backend host in title.
+
+Changed:
+
+- Change backend baseURL default port to 9090.
+
 ## [0.2.8](https://github.com/haishanh/yacd/compare/v0.2.7...v0.2.8) (2020-10-12)
 
 Added:
