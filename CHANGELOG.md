@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.2.13](https://github.com/haishanh/yacd/compare/v0.2.12...v0.2.13) (2020-12-06)
+
+Added:
+
+- Initial Chinese UI language support
+
+Fixed:
+
+- Fix weird scroll behavior on config page
+
+## [0.2.12](https://github.com/haishanh/yacd/compare/v0.2.11...v0.2.12) (2020-11-24)
+
+Changed:
+
+- Some minor accessibility improvements
+- Changed log level display order to `debug warning info error silent`
+
+## [0.2.11](https://github.com/haishanh/yacd/compare/v0.2.10...v0.2.11) (2020-11-09)
+
+Changed:
+
+- Display proxy type "Shadowsocks" as "SS" to make proxy item tile more compact
+
 ## [0.2.10](https://github.com/haishanh/yacd/compare/v0.2.9...v0.2.10) (2020-11-06)
 
 Added:

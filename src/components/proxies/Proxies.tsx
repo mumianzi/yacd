@@ -1,5 +1,7 @@
+import Tooltip from '@reach/tooltip';
 import * as React from 'react';
 import { Zap } from 'react-feather';
+import { useTranslation } from 'react-i18next';
 
 import { getClashAPIConfig } from '../../store/app';
 import {
@@ -13,7 +15,7 @@ import {
 import Button from '../Button';
 import ContentHeader from '../ContentHeader';
 import BaseModal from '../shared/BaseModal';
-import { Fab, position as fabPosition } from '../shared/Fab';
+import { Fab, IsFetching, position as fabPosition } from '../shared/Fab';
 import { connect, useStoreActions } from '../StateProvider';
 import Equalizer from '../svg/Equalizer';
 import { ClosePrevConns } from './ClosePrevConns';
@@ -79,6 +81,8 @@ function Proxies({
     proxies: { closeModalClosePrevConns, closePrevConnsAndTheModal },
   } = useStoreActions();
 
+  const { t } = useTranslation();
+
   return (
     <>
       <BaseModal
@@ -88,14 +92,16 @@ function Proxies({
         <Settings />
       </BaseModal>
       <div className={s0.topBar}>
-        <ContentHeader title="Proxies" />
+        <ContentHeader title={t('Proxies')} />
         <div className={s0.topBarRight}>
           <div className={s0.textFilterContainer}>
             <TextFilter />
           </div>
-          <Button kind="minimal" onClick={() => setIsSettingsModalOpen(true)}>
-            <Equalizer size={16} />
-          </Button>
+          <Tooltip label={t('settings')}>
+            <Button kind="minimal" onClick={() => setIsSettingsModalOpen(true)}>
+              <Equalizer size={16} />
+            </Button>
+          </Tooltip>
         </div>
       </div>
       <div>
@@ -115,10 +121,18 @@ function Proxies({
       <ProxyProviderList items={proxyProviders} />
       <div style={{ height: 60 }} />
       <Fab
-        icon={isTestingLatency ? <ColorZap /> : <Zap width={16} height={16} />}
+        icon={
+          isTestingLatency ? (
+            <IsFetching>
+              <Zap width={16} height={16} />
+            </IsFetching>
+          ) : (
+            <Zap width={16} height={16} />
+          )
+        }
         onClick={requestDelayAllFn}
-        text="Test Latency"
-        position={fabPosition}
+        text={t('Test Latency')}
+        style={fabPosition}
       />
       <BaseModal
         isOpen={showModalClosePrevConns}
@@ -130,23 +144,6 @@ function Proxies({
         />
       </BaseModal>
     </>
-  );
-}
-
-function ColorZap() {
-  return (
-    <div
-      className={s0.spining}
-      style={{
-        width: 48,
-        height: 48,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Zap width={16} height={16} />
-    </div>
   );
 }
 
